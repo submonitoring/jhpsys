@@ -7,19 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class ModuleBaa extends Model
 {
-    public function moduleAaaModuleBaas()
-    {
-        return $this->hasMany(ModuleAaaModuleBaa::class);
-    }
-
-    public function moduleBaaModuleCaas()
-    {
-        return $this->hasMany(ModuleBaaModuleCaa::class);
-    }
-
     public function applicationPaths()
     {
         return $this->hasMany(ApplicationPath::class);
+    }
+
+    public function moduleAaa()
+    {
+        return $this->belongsTo(ModuleAaa::class);
+    }
+
+    public function moduleCaas()
+    {
+        return $this->hasMany(ModuleCaa::class);
     }
 
     use log;

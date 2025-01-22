@@ -7,19 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 
 class ModuleCaa extends Model
 {
-    public function moduleBaaModuleCaas()
-    {
-        return $this->hasMany(ModuleBaaModuleCaa::class);
-    }
-
-    public function moduleCaaModuleActivityTypes()
-    {
-        return $this->hasMany(ModuleCaaModuleActivityType::class);
-    }
-
     public function applicationPaths()
     {
         return $this->hasMany(ApplicationPath::class);
+    }
+
+    public function moduleBaa()
+    {
+        return $this->belongsTo(ModuleBaa::class);
+    }
+
+    public function moduleActivityType()
+    {
+        return $this->belongsTo(ModuleActivityType::class);
+    }
+
+    public function documentTypes()
+    {
+        return $this->hasMany(DocumentType::class);
+    }
+
+    public function statusGroup()
+    {
+        return $this->belongsTo(StatusGroup::class);
+    }
+
+    public function statusGroups()
+    {
+        return $this->morphToMany(StatusGroup::class, 'status_groupable');
     }
 
     use log;

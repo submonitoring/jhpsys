@@ -81,6 +81,18 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property int|null $application_name_id
+ * @property int|null $module_aaa_id
+ * @property int|null $module_baa_id
+ * @property int|null $module_caa_id
+ * @property int|null $module_activity_type_id
+ * @property int|null $module_activity_id
+ * @property int|null $is_active
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read \App\Models\ApplicationName|null $applicationName
@@ -93,6 +105,18 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereApplicationNameId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereModuleAaaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereModuleActivityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereModuleActivityTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereModuleBaaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereModuleCaaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ApplicationPath whereUpdatedBy($value)
  */
 	class ApplicationPath extends \Eloquent {}
 }

@@ -73,6 +73,13 @@ class SubmonitoringPanelProvider extends PanelProvider
                     ->icon('heroicon-o-shopping-bag')
                     ->collapsed(),
 
+
+
+                NavigationGroup::make()
+                    ->label('Organizational Structures')
+                    ->icon('heroicon-o-rectangle-group')
+                    ->collapsed(),
+
                 NavigationGroup::make()
                     ->label('Material Document')
                     ->icon('heroicon-o-document')
@@ -84,28 +91,28 @@ class SubmonitoringPanelProvider extends PanelProvider
                     ->collapsed(),
 
                 NavigationGroup::make()
-                    ->label('Organizational Structures')
-                    ->icon('heroicon-o-rectangle-group')
+                    ->label('Basic Settings')
+                    ->icon('heroicon-o-wrench')
                     ->collapsed(),
 
                 NavigationGroup::make()
-                    ->label('Address')
-                    ->icon('heroicon-o-map-pin')
-                    ->collapsed(),
-
-                NavigationGroup::make()
-                    ->label('Customizing')
+                    ->label('Configuration')
                     ->icon('heroicon-o-adjustments-horizontal')
                     ->collapsed(),
 
                 NavigationGroup::make()
-                    ->label('Manage Number Range')
+                    ->label('Number Range')
                     ->icon('heroicon-o-numbered-list')
                     ->collapsed(),
 
                 NavigationGroup::make()
-                    ->label('Address Data')
-                    ->icon('heroicon-o-map')
+                    ->label('System General')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->collapsed(),
+
+                NavigationGroup::make()
+                    ->label('System')
+                    ->icon('heroicon-o-rectangle-group')
                     ->collapsed(),
 
                 NavigationGroup::make()

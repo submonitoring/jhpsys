@@ -156,10 +156,10 @@ class User extends Authenticatable implements FilamentUser
 
     public function getRedirectRoute(): string
     {
-        return match ((string)$this->panel) {
-            'submonitoring' => 'submonitoring',
-            'jhpadmin' => 'jhpadmin',
-            'jhp' => 'jhp'
+        return match ((string)$this->panel_role_id) {
+            '1' => 'submonitoring',
+            '2' => 'jhpadmin',
+            '3' => 'jhp'
         };
     }
 

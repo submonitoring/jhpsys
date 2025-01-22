@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "awcodes/filament-table-repeater": "^3.0",
+        "aymanalhattami/filament-slim-scrollbar": "^2.0",
         "barryvdh/laravel-debugbar": "^3.14",
         "barryvdh/laravel-dompdf": "^3.0",
         "bezhansalleh/filament-panel-switch": "^1.0",

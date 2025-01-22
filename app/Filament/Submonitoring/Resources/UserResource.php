@@ -7,6 +7,7 @@ use App\Filament\Imports\UserImporter;
 use App\Filament\Submonitoring\Clusters\ManageUser;
 use App\Filament\Submonitoring\Resources\UserResource\Pages;
 use App\Filament\Submonitoring\Resources\UserResource\RelationManagers;
+use App\Models\PanelRole;
 use App\Models\User;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
@@ -14,26 +15,33 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
+use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\ColumnGroup;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
+    protected static ?string $model = User::class;
+
     public static function canViewAny(): bool
     {
         return auth()->user()->id == 1;
@@ -41,21 +49,24 @@ class UserResource extends Resource
 
     protected static ?string $modelLabel = 'User';
 
-    protected static ?string $pluralModelLabel = 'Daftar User';
+    protected static ?string $pluralModelLabel = 'User';
 
     protected static ?string $navigationLabel = 'User';
 
-    protected static ?int $navigationSort = 900000000;
-
-    protected static ?string $model = User::class;
+    protected static ?int $navigationSort = 990000020;
 
     // protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    // protected static ?string $cluster = ManageUser::class;
+    // protected static ?string $cluster = AdminClustersUser::class;
+
+    protected static ?string $navigationGroup = 'Manage Users';
+
+    // protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema(static::UserFormSchema());
     }
 
@@ -73,22 +84,34 @@ class UserResource extends Resource
                                 ->label('Name')
                                 ->required(),
 
-                            TextInput::make('username')
-                                ->label('Username')
-                                ->unique(User::class, ignoreRecord: true)
-                                ->required(),
-
-                            TextInput::make('panel')
-                                ->label('Panel')
-                                ->required(),
-
-                            TextInput::make('email')
-                                ->label('Email')
-                                ->required(),
-
                         ]),
 
                     Grid::make(4)
+                        ->schema([
+
+                            TextInput::make('username')
+                                ->label('Username')
+                                ->required()
+                                ->unique(User::class, ignoreRecord: true),
+                        ]),
+
+                    Grid::make(4)
+                        ->schema([
+
+                            ToggleButtons::make('panel_role_id')
+                                ->label('Panel')
+                                ->required()
+                                ->inline()
+                                ->options(PanelRole::where('is_active', true)->pluck('panel_role', 'id')),
+                        ]),
+
+                ])
+                ->compact(),
+
+            Section::make('Password')
+                ->schema([
+
+                    Grid::make(2)
                         ->schema([
 
                             TextInput::make('password')
@@ -96,18 +119,16 @@ class UserResource extends Resource
                                 ->password()
                                 ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
                                 ->dehydrated(fn(?string $state): bool => filled($state))
-                                ->required(fn(string $operation): bool => $operation === 'create')
-
+                                ->required(fn(string $operation): bool => $operation === 'create'),
 
                         ]),
-
-                ])->collapsible()
+                ])
                 ->compact(),
 
             Section::make('Status')
                 ->schema([
 
-                    Grid::make(4)
+                    Grid::make(2)
                         ->schema([
 
                             ToggleButtons::make('is_active')
@@ -128,7 +149,7 @@ class UserResource extends Resource
         return $table
             ->columns([
 
-                ColumnGroup::make('Name', [
+                ColumnGroup::make('Nama', [
 
                     TextColumn::make('name')
                         ->label('Name')
@@ -150,10 +171,6 @@ class UserResource extends Resource
                         ->copyMessage('Tersalin')
                         ->sortable(),
 
-                ]),
-
-                ColumnGroup::make('Email', [
-
                     TextColumn::make('email')
                         ->label('Email')
                         ->searchable(isIndividual: true, isGlobal: false)
@@ -163,11 +180,12 @@ class UserResource extends Resource
                         })
                         ->copyMessage('Tersalin')
                         ->sortable(),
+
                 ]),
 
                 ColumnGroup::make('Panel', [
 
-                    TextColumn::make('panel')
+                    TextColumn::make('panelRole.panel_role')
                         ->label('Panel')
                         ->searchable(isIndividual: true, isGlobal: false)
                         ->copyable()
@@ -176,7 +194,6 @@ class UserResource extends Resource
                         })
                         ->copyMessage('Tersalin')
                         ->sortable(),
-
                 ]),
 
                 ColumnGroup::make('Status', [
@@ -220,7 +237,6 @@ class UserResource extends Resource
                 ]),
             ])
             ->recordUrl(null)
-            ->extremePaginationLinks()
             ->searchOnBlur()
             ->filters([
                 QueryBuilder::make()
@@ -235,15 +251,21 @@ class UserResource extends Resource
                             ->label('Username')
                             ->nullable(),
 
-                        TextConstraint::make('panel')
-                            ->label('Panel')
+                        SelectConstraint::make('panel_role_id')
+                            ->label('Panel Role')
+                            ->options(PanelRole::all()->pluck('panel_role', 'id'))
+                            ->multiple()
                             ->nullable(),
 
                         TextConstraint::make('email')
                             ->label('Email')
                             ->nullable(),
 
-                        BooleanConstraint::make('is_active'),
+
+                        BooleanConstraint::make('is_active')
+                            ->label('Status')
+                            ->icon(false)
+                            ->nullable(),
 
                         TextConstraint::make('created_by')
                             ->label('Created by')
@@ -263,15 +285,14 @@ class UserResource extends Resource
                             ->icon(false)
                             ->nullable(),
 
-                    ])
-            ], layout: Tables\Enums\FiltersLayout::AboveContentCollapsible)
-            ->deferFilters()
+                    ]),
+            ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
 
-                // ImportAction::make()
-                //     ->label('Import')
-                //     ->importer(UserImporter::class),
+                ImportAction::make()
+                    ->label('Import')
+                    ->importer(UserImporter::class)
             ])
             ->actions([
                 ActionGroup::make([
@@ -287,9 +308,10 @@ class UserResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
 
-                // ExportBulkAction::make()
-                //     ->label('Export')
-                //     ->exporter(UserExporter::class)
+                ExportBulkAction::make()
+                    ->label('Export')
+                    ->exporter(UserExporter::class),
+
             ]);
     }
 

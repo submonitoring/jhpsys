@@ -10,6 +10,19 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('/seubmonitoring');
+        $panel = Auth::user()->panel_role_id;
+
+        // dd($panel);
+
+        if ($panel == 1) {
+
+            return redirect('/submonitoring');
+        } elseif ($panel == 2) {
+
+            return redirect('/jhpadmin');
+        } elseif ($panel == 3) {
+
+            return redirect('/jhp');
+        }
     });
 });

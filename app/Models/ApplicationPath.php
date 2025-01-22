@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicationPath extends Model
 {
-
     public function applicationName()
     {
         return $this->belongsTo(ApplicationName::class);

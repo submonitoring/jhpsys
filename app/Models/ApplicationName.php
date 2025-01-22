@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicationName extends Model
 {
-    public function applicationNameModuleAaas()
-    {
-        return $this->hasMany(ApplicationNameModuleAaa::class);
-    }
 
     public function applicationPaths()
     {
         return $this->hasMany(ApplicationPath::class);
+    }
+
+    public function moduleAaas()
+    {
+        return $this->hasMany(ModuleAaa::class);
     }
 
     use log;
