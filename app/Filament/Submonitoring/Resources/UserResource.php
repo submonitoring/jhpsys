@@ -9,13 +9,16 @@ use App\Filament\Submonitoring\Resources\UserResource\Pages;
 use App\Filament\Submonitoring\Resources\UserResource\RelationManagers;
 use App\Models\PanelRole;
 use App\Models\User;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -65,6 +68,10 @@ class UserResource extends Resource
 
     // protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
+    protected static ?string $recordTitleAttribute = 'username';
+
+    // protected static ?string $recordRouteKeyName = 'unique';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -100,12 +107,15 @@ class UserResource extends Resource
                     Grid::make(4)
                         ->schema([
 
-                            ToggleButtons::make('panel_role_id')
+                            ToggleButtons::make('panel')
                                 ->label('Panel')
                                 ->required()
                                 ->inline()
                                 // ->multiple()
                                 ->options(PanelRole::where('is_active', true)->pluck('panel_role', 'id')),
+
+                            Hidden::make('panel_role_id')
+                                ->default(1)
                         ]),
 
                 ])
@@ -117,12 +127,33 @@ class UserResource extends Resource
                     Grid::make(2)
                         ->schema([
 
-                            TextInput::make('password')
-                                ->label('Password')
-                                ->password()
-                                ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
-                                ->dehydrated(fn(?string $state): bool => filled($state))
-                                ->required(fn(string $operation): bool => $operation === 'create'),
+
+                            TextInput::make('jhpunique')
+                                ->label('jhpunique')
+                                ->suffixAction(
+                                    Action::make('generatepassword')
+                                        ->icon('heroicon-m-arrow-path')
+                                        ->action(function (Set $set, $state) {
+                                            $set('jhpunique', random_int(10000000, 99999999));
+                                        })
+                                )
+                                ->live()
+                                ->afterStateUpdated(function (Set $set, $state) {
+                                    $set('password', $state);
+                                }),
+
+                            // TextInput::make('password')
+                            //     ->label('Password')
+                            //     ->password()
+                            //     ->revealable()
+                            //     ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
+                            //     ->dehydrated(fn(?string $state): bool => filled($state))
+                            //     ->required(fn(string $operation): bool => $operation === 'create'),
+                            // ->live()
+                            // ->afterStateUpdated(function (Set $set, $state) {
+                            //     $set('jhpunique', $state);
+                            // }),
+
 
                         ]),
                 ])
@@ -204,7 +235,7 @@ class UserResource extends Resource
 
                 ColumnGroup::make('Panel', [
 
-                    TextColumn::make('panel_role_id')
+                    TextColumn::make('panel')
                         ->label('Panel')
                         ->searchable(isIndividual: true, isGlobal: false)
                         ->copyable()

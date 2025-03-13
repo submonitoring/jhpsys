@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\Login;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -33,7 +34,7 @@ class LoginPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->login()
+            ->login(Login::class)
             ->id('login')
             ->path('')
             ->discoverResources(in: app_path('Filament/Login/Resources'), for: 'App\\Filament\\Login\\Resources')
@@ -133,7 +134,9 @@ class LoginPanelProvider extends PanelProvider
             // ->topNavigation()
             // ->breadcrumbs(false)
             ->maxContentWidth(MaxWidth::Full)
-            ->brandLogo(asset('/logojhp/Logo JHP HD.png'))
+            // ->brandLogo(asset('/logojhp/Logo JHP HD.png'))
+            ->brandLogo(fn() => view('filament/brand-logo'))
+            ->brandLogoHeight('auto')
             ->favicon(asset('favicon-32x32.png'))
             ->brandName('JHP System')
             ->plugins([

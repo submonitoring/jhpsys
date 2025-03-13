@@ -33,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
     {
 
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
+
+        $this->app->bind(LogoutResponseContract::class, MyLogoutResponse::class);
     }
 
     /**
@@ -40,8 +42,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(LogoutResponseContract::class, MyLogoutResponse::class);
-
         Model::unguard();
 
         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {

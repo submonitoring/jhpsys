@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Kenepa\ResourceLock\Models\Concerns\HasLocks;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;

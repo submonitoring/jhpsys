@@ -86,7 +86,7 @@ class SubmonitoringPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
-                NotesWidget::class,
+                // NotesWidget::class,
                 // VersionsWidget::class,
                 // OverlookWidget::class,
             ])
@@ -199,7 +199,7 @@ class SubmonitoringPanelProvider extends PanelProvider
                     ),
                 FilamentSimpleThemePlugin::make(),
                 QuickCreatePlugin::make(),
-                StickyHeaderPlugin::make(),
+                // StickyHeaderPlugin::make(),
                 // ->floating(),
                 // VersionsPlugin::make(),
                 LightSwitchPlugin::make(),
@@ -219,76 +219,76 @@ class SubmonitoringPanelProvider extends PanelProvider
                 //     ->toggle(),
                 EasyFooterPlugin::make(),
                 FilamentRecordSwitcherPlugin::make(),
-                BannerPlugin::make(),
-                DeliaPlugin::make(),
-                AutoLogoutPlugin::make()
-                    ->color(Color::Emerald)                         // Set the color. Defaults to Zinc
-                    // ->disableIf(fn() => auth()->id() === 1)        // Disable the user with ID 1
-                    ->logoutAfter(Carbon::SECONDS_PER_MINUTE * 5)   // Logout the user after 5 minutes
-                    ->withoutWarning()                              // Disable the warning before logging out
-                    ->withoutTimeLeft()                             // Disable the time left
-                    ->timeLeftText('Oh no. Kicking you in...')      // Change the time left text
-                    ->timeLeftText(''),
+                // BannerPlugin::make(),
+                // DeliaPlugin::make(),
+                // AutoLogoutPlugin::make()
+                //     ->color(Color::Emerald)                         // Set the color. Defaults to Zinc
+                //     // ->disableIf(fn() => auth()->id() === 1)        // Disable the user with ID 1
+                //     ->logoutAfter(Carbon::SECONDS_PER_MINUTE * 5)   // Logout the user after 5 minutes
+                //     ->withoutWarning()                              // Disable the warning before logging out
+                //     ->withoutTimeLeft()                             // Disable the time left
+                //     ->timeLeftText('Oh no. Kicking you in...')      // Change the time left text
+                //     ->timeLeftText(''),
                 FilamentProgressbarPlugin::make()->color('#ef4444'),
-                GreeterPlugin::make()
-                    ->message('Welcome,')
-                    ->name('Admin')
-                    ->title('Selamat datang')
-                    // ->avatar(size: 'w-16 h-16', url: 'https://avatarfiles.alphacoders.com/236/236674.jpg')
-                    ->action(
-                        Action::make('action')
-                            ->label('Visit web')
-                            ->icon('heroicon-o-shopping-cart')
-                            ->url('jhpherbal.com')
-                    )
-                    ->sort(-1)
-                    ->columnSpan('full'),
-                FilamentSpatieLaravelBackupPlugin::make(),
-                FilamentSpatieLaravelHealthPlugin::make(),
-                FilamentAlertsPlugin::make(),
+                // GreeterPlugin::make()
+                //     ->message('Welcome,')
+                //     ->name('Admin')
+                //     ->title('Selamat datang')
+                //     // ->avatar(size: 'w-16 h-16', url: 'https://avatarfiles.alphacoders.com/236/236674.jpg')
+                //     ->action(
+                //         Action::make('action')
+                //             ->label('Visit web')
+                //             ->icon('heroicon-o-shopping-cart')
+                //             ->url('jhpherbal.com')
+                //     )
+                //     ->sort(-1)
+                //     ->columnSpan('full'),
+                // FilamentSpatieLaravelBackupPlugin::make(),
+                // FilamentSpatieLaravelHealthPlugin::make(),
+                // FilamentAlertsPlugin::make(),
                 // FilamentAPIPlugin::make(),
                 // FilamentBookmarksMenuPlugin::make(),
-                FilamentBrowserPlugin::make()
-                    ->hiddenFolders([
-                        base_path('app')
-                    ])
-                    ->hiddenFiles([
-                        base_path('.env')
-                    ])
-                    ->hiddenExtantions([
-                        "php"
-                    ])
-                    ->allowCreateFolder()
-                    ->allowEditFile()
-                    ->allowCreateNewFile()
-                    ->allowCreateFolder()
-                    ->allowRenameFile()
-                    ->allowDeleteFile()
-                    ->allowMarkdown()
-                    ->allowCode()
-                    ->allowPreview()
-                    ->basePath(base_path()),
-                FilamentCMSPlugin::make()
-                    ->useCategory()
-                    ->usePost()
-                    ->allowExport()
-                    ->allowImport(),
-                FilamentDocsPlugin::make(),
-                FilamentArtisanPlugin::make(),
+                // FilamentBrowserPlugin::make()
+                //     ->hiddenFolders([
+                //         base_path('app')
+                //     ])
+                //     ->hiddenFiles([
+                //         base_path('.env')
+                //     ])
+                //     ->hiddenExtantions([
+                //         "php"
+                //     ])
+                //     ->allowCreateFolder()
+                //     ->allowEditFile()
+                //     ->allowCreateNewFile()
+                //     ->allowCreateFolder()
+                //     ->allowRenameFile()
+                //     ->allowDeleteFile()
+                //     ->allowMarkdown()
+                //     ->allowCode()
+                //     ->allowPreview()
+                //     ->basePath(base_path()),
+                // FilamentCMSPlugin::make()
+                //     ->useCategory()
+                //     ->usePost()
+                //     ->allowExport()
+                //     ->allowImport(),
+                // FilamentDocsPlugin::make(),
+                // FilamentArtisanPlugin::make(),
                 // FilamentInvoicesPlugin::make(),
                 // FilamentLocationsPlugin::make(),
-                FilamentLoggerPlugin::make(),
+                // FilamentLoggerPlugin::make(),
                 // FilamentMediaManagerPlugin::make(),
-                \Filament\SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en', 'ar']),
-                \TomatoPHP\FilamentMenus\FilamentMenusPlugin::make(),
-                FilamentNotesPlugin::make(),
-                FilamentSettingsHubPlugin::make()
-                    ->allowSiteSettings()
-                    ->allowSocialMenuSettings(),
-                FilamentSocialPlugin::make()
-                    ->socialLogin()
-                    ->socialRegister(),
-                FilamentUsersPlugin::make(),
+                // \Filament\SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en', 'ar']),
+                // \TomatoPHP\FilamentMenus\FilamentMenusPlugin::make(),
+                // FilamentNotesPlugin::make(),
+                // FilamentSettingsHubPlugin::make()
+                //     ->allowSiteSettings()
+                //     ->allowSocialMenuSettings(),
+                // FilamentSocialPlugin::make()
+                //     ->socialLogin()
+                //     ->socialRegister(),
+                // FilamentUsersPlugin::make(),
                 // FilamentWalletPlugin::make(),
             ])
             ->resources([
