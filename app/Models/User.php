@@ -97,64 +97,24 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        // if (auth()->user()->panel_role_id == 3 && $panel->getId() === 'jhp') {
-        //     return true;
-        // } elseif (auth()->user()->panel_role_id == 2 && $panel->getId() === 'jhpadmin') {
-        //     return true;
-        // } elseif (auth()->user()->panel_role_id == 1 || auth()->user()->panel_role_id == 1 && $panel->getId() === 'jhp') {
-        //     return true;
-        // } elseif (auth()->user()->panel_role_id == 1 || auth()->user()->panel_role_id == 1 && $panel->getId() === 'jhpadmin') {
-        //     return true;
-        // } {
-
-        //     return false;
-        // }
 
         if ($panel->getId() === 'submonitoring') {
-            return auth()->user()->panel == 1;
+            return auth()->user()->panel_role_id == 1;
         }
 
         return true;
 
         if ($panel->getId() === 'jhpadmin') {
-            return auth()->user()->panel == 2;
+            return auth()->user()->panel_role_id == 2;
         }
 
         return true;
 
         if ($panel->getId() === 'jhp') {
-            return auth()->user()->panel == 3;
+            return auth()->user()->panel_role_id == 3;
         }
 
         return true;
-
-        // if ($panel->getId() === 'jhp') {
-        //     if (auth()->user()->panel == 3) {
-        //         return true;
-        //     } else {
-        //         return true;
-        //     }
-        // } elseif ($panel->getId() === 'jhpadmin') {
-        //     if (auth()->user()->panel == 2) {
-        //         return true;
-        //     } elseif (auth()->user()->panel == 1) {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     }
-        // } elseif ($panel->getId() === 'submonitoring') {
-        //     if (auth()->user()->panel == 1) {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     }
-        // } elseif ($panel->getId() === 'login') {
-        //     if (auth()->user()->panel == 1) {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     }
-        // }
     }
 
     /**
@@ -208,10 +168,10 @@ class User extends Authenticatable implements FilamentUser
 
     public function getRedirectRoute(): string
     {
-        return match ((int)$this->panel) {
+        return match ((int)$this->panel_role_id) {
             1 => 'submonitoring',
             2 => 'jhpadmin',
-            3 => 'jhp'
+            3 => '/'
         };
     }
 

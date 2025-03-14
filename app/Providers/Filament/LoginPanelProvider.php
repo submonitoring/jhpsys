@@ -33,10 +33,9 @@ class LoginPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
             ->login(Login::class)
             ->id('login')
-            ->path('')
+            ->path('login')
             ->discoverResources(in: app_path('Filament/Login/Resources'), for: 'App\\Filament\\Login\\Resources')
             ->discoverPages(in: app_path('Filament/Login/Pages'), for: 'App\\Filament\\Login\\Pages')
             ->pages([

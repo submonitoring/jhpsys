@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\Login;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -21,6 +22,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Kenepa\ResourceLock\ResourceLockPlugin;
+use LaraZeus\Delia\DeliaPlugin;
 use pxlrbt\FilamentSpotlight\SpotlightPlugin;
 use TomatoPHP\FilamentSimpleTheme\FilamentSimpleThemePlugin;
 
@@ -29,8 +31,10 @@ class JhpPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->default()
+            ->login(Login::class)
             ->id('jhp')
-            ->path('jhp')
+            ->path('')
             // ->colors([
             //     'primary' => Color::Amber,
             // ])
@@ -152,6 +156,7 @@ class JhpPanelProvider extends PanelProvider
                         // action: CustomTwoFactorPage::class // optionally, use a custom 2FA page
                     ),
                 // FilamentSimpleThemePlugin::make()
+                DeliaPlugin::make(),
             ])
             ->viteTheme('resources/css/filament/jhp/theme.css');
     }

@@ -35,18 +35,21 @@ class Login extends BaseAuth
     {
         // $login_type = filter_var($data['username'], FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
 
+        // dd($data);
+
         return [
             // $login_type => $data['username'],
             'username'  => $data['username'],
             'password'  => $data['password'],
+
         ];
     }
 
     protected function throwFailureValidationException(): never
     {
+
         throw ValidationException::withMessages([
             'data.username' => __('filament-panels::pages/auth/login.messages.failed'),
         ]);
     }
-
 }
